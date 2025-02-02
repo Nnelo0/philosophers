@@ -40,6 +40,6 @@ typedef struct s_philo
 int			ft_atoi(const char *nptr);
 int			ft_isdigit_s(char *s);
 long long	get_timestamp_ms(void);
-int	create_threads(t_philo *philo, t_data *data);
-
+int			create_threads(t_philo *philo, t_data *data);
+void		*check_death(void *arg);
 #endif

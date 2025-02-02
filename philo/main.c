@@ -64,7 +64,7 @@ t_philo	*init_philo(t_data *data)
 		return (printf("Malloc error\n"), NULL);
 	while (i < data->nb_philo)
 	{
-		data->philo[i].id = i;
+		data->philo[i].id = i + 1;
 		data->philo[i].left_fork = i;
 		data->philo[i].right_fork = (i + 1) % data->nb_philo;
 		data->philo[i].meal_count = 0;
@@ -77,18 +77,24 @@ t_philo	*init_philo(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
-	t_philo	*philo;
+	t_data		data;
+	t_philo		*philo;
+	pthread_t	monitor_thread;
 
 	if (error(argc, argv))
 		return (1);
 	if (init_data(argc, argv, &data))
 		return (1);
+	if (data.nb_philo == 1)
+		return (printf("%lld 1 has taken a fork\n", get_timestamp_ms()),
+			usleep(data.time_die * 1000),
+			printf("%lld 1 died\n", get_timestamp_ms()), free(data.fork), 0);
 	philo = init_philo(&data);
 	if (!philo)
 		return (1);
-	if (create_threads(philo, &data))
-		return (1);
+	if (pthread_create(&monitor_thread, NULL, check_death, &data) != 0)
+		return (printf("Error creating thread\n"), 1);
+	create_threads(philo, &data);
 	free(data.fork);
 	free(data.philo);
 	return (0);
