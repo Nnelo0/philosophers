@@ -69,6 +69,7 @@ t_philo	*init_philo(t_data *data)
 		data->philo[i].right_fork = (i + 1) % data->nb_philo;
 		data->philo[i].meal_count = 0;
 		data->philo[i].last_meal = data->start_time;
+		pthread_mutex_init(&data->philo[i].meal_mutex, NULL);
 		data->philo[i].data = data;
 		i++;
 	}
@@ -86,15 +87,16 @@ int	main(int argc, char **argv)
 	if (init_data(argc, argv, &data))
 		return (1);
 	if (data.nb_philo == 1)
-		return (printf("%lld 1 has taken a fork\n", get_timestamp_ms()),
+		return (printf("%lld 1 has taken a fork\n", ft_time(&data)),
 			usleep(data.time_die * 1000),
-			printf("%lld 1 died\n", get_timestamp_ms()), free(data.fork), 0);
+			printf("%lld 1 died\n", ft_time(&data)), free(data.fork), 0);
 	philo = init_philo(&data);
 	if (!philo)
 		return (1);
 	if (pthread_create(&monitor_thread, NULL, check_death, &data) != 0)
 		return (printf("Error creating thread\n"), 1);
 	create_threads(philo, &data);
+	destroy_mutex(&data);
 	free(data.fork);
 	free(data.philo);
 	return (0);

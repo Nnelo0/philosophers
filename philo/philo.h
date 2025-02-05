@@ -33,6 +33,7 @@ typedef struct s_philo
 	int				right_fork;
 	int				meal_count;
 	long long		last_meal;
+	pthread_mutex_t	meal_mutex;
 	t_data			*data;
 	pthread_t		thread;
 }	t_philo;
@@ -42,4 +43,7 @@ int			ft_isdigit_s(char *s);
 long long	get_timestamp_ms(void);
 int			create_threads(t_philo *philo, t_data *data);
 void		*check_death(void *arg);
+long long	ft_time(t_data *data);
+void		destroy_mutex(t_data *data);
+
 #endif
