@@ -57,13 +57,11 @@ static void	*philo_routine(void *arg)
 		pthread_mutex_unlock(&data->simu_mutex);
 		usleep(data->time_eat * 1000);
 		pthread_mutex_lock(&data->simu_mutex);
-		if (data->simu_over)
-			return (pthread_mutex_unlock(&data->simu_mutex),
-				pthread_mutex_unlock(&data->fork[philo->left_fork]),
-				pthread_mutex_unlock(&data->fork[philo->right_fork]), NULL);
 		pthread_mutex_unlock(&data->simu_mutex);
 		pthread_mutex_unlock(&data->fork[philo->left_fork]);
 		pthread_mutex_unlock(&data->fork[philo->right_fork]);
+		if (data->simu_over)
+			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
 		printf("%lld %d is sleeping\n", ft_time(data), philo->id);
 		usleep(data->time_sleep * 1000);
 		pthread_mutex_lock(&data->simu_mutex);
