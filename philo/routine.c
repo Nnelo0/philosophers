@@ -50,6 +50,10 @@ static void	*philo_routine(void *arg)
 		pthread_mutex_lock(&data->fork[philo->right_fork]);
 		printf("%lld %d has taken a fork\n", ft_time(data), philo->id);
 		pthread_mutex_lock(&data->simu_mutex);
+		if (data->simu_over != 0)
+			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
+		pthread_mutex_unlock(&data->simu_mutex);
+		pthread_mutex_lock(&data->simu_mutex);
 		pthread_mutex_lock(&philo->meal_mutex);
 		philo->last_meal = get_timestamp_ms();
 		pthread_mutex_unlock(&philo->meal_mutex);
