@@ -55,6 +55,7 @@ static void	*philo_routine(void *arg)
 		pthread_mutex_unlock(&data->simu_mutex);
 		pthread_mutex_lock(&data->simu_mutex);
 		pthread_mutex_lock(&philo->meal_mutex);
+		philo->meal_count += 1;
 		philo->last_meal = get_timestamp_ms();
 		pthread_mutex_unlock(&philo->meal_mutex);
 		printf("%lld %d is eating\n", ft_time(data), philo->id);
@@ -64,6 +65,8 @@ static void	*philo_routine(void *arg)
 		pthread_mutex_unlock(&data->simu_mutex);
 		pthread_mutex_unlock(&data->fork[philo->left_fork]);
 		pthread_mutex_unlock(&data->fork[philo->right_fork]);
+		if (philo->meal_count >= data->nb_eat)
+			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
 		if (data->simu_over)
 			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
 		printf("%lld %d is sleeping\n", ft_time(data), philo->id);
