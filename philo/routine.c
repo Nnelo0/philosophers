@@ -16,7 +16,7 @@ void	*check_death(void *arg)
 			if (get_timestamp_ms() - data->philo[i].last_meal >= data->time_die)
 			{
 				pthread_mutex_unlock(&data->philo[i].meal_mutex);
-				printf("%lld %d died\n", ft_time(data), data->philo[i].id);
+				printf(RED "%lld %d died\n" RESET, ft_time(data), data->philo[i].id);
 				data->simu_over = 1;
 				pthread_mutex_unlock(&data->simu_mutex);
 				return (NULL);
@@ -46,9 +46,9 @@ static void	*philo_routine(void *arg)
 			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
 		pthread_mutex_unlock(&data->simu_mutex);
 		pthread_mutex_lock(&data->fork[philo->left_fork]);
-		printf("%lld %d has taken a fork\n", ft_time(data), philo->id);
+		printf(BLUE "%lld %d has taken a fork\n" RESET, ft_time(data), philo->id);
 		pthread_mutex_lock(&data->fork[philo->right_fork]);
-		printf("%lld %d has taken a fork\n", ft_time(data), philo->id);
+		printf(BLUE "%lld %d has taken a fork\n" RESET, ft_time(data), philo->id);
 		pthread_mutex_lock(&data->simu_mutex);
 		if (data->simu_over != 0)
 			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
@@ -58,7 +58,7 @@ static void	*philo_routine(void *arg)
 		philo->meal_count += 1;
 		philo->last_meal = get_timestamp_ms();
 		pthread_mutex_unlock(&philo->meal_mutex);
-		printf("%lld %d is eating\n", ft_time(data), philo->id);
+		printf(GREEN "%lld %d is eating\n" RESET, ft_time(data), philo->id);
 		pthread_mutex_unlock(&data->simu_mutex);
 		usleep(data->time_eat * 1000);
 		pthread_mutex_lock(&data->simu_mutex);
@@ -69,13 +69,13 @@ static void	*philo_routine(void *arg)
 			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
 		if (data->simu_over)
 			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
-		printf("%lld %d is sleeping\n", ft_time(data), philo->id);
+		printf(MAGENTA "%lld %d is sleeping\n" RESET, ft_time(data), philo->id);
 		usleep(data->time_sleep * 1000);
 		pthread_mutex_lock(&data->simu_mutex);
 		if (data->simu_over)
 			return (pthread_mutex_unlock(&data->simu_mutex), NULL);
 		pthread_mutex_unlock(&data->simu_mutex);
-		printf("%lld %d is thinking\n", ft_time(data), philo->id);
+		printf(YELLOW "%lld %d is thinking\n" RESET, ft_time(data), philo->id);
 	}
 	return (NULL);
 }
