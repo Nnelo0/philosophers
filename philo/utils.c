@@ -52,14 +52,3 @@ long long	ft_time(t_data *data)
 {
 	return (get_timestamp_ms() - data->start_time);
 }
-
-void	destroy_mutex(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nb_philo)
-		pthread_mutex_destroy(&data->fork[i++]);
-	pthread_mutex_destroy(&data->simu_mutex);
-	pthread_mutex_destroy(&data->philo->meal_mutex);
-}

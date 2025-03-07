@@ -50,7 +50,7 @@ int			ft_atoi(const char *nptr);
 int			ft_isdigit_s(char *s);
 long long	get_timestamp_ms(void);
 int			create_threads(t_philo *philo, t_data *data);
-void		*check_death(void *arg);
+void		check_death(t_philo *philo, t_data *data);
 long long	ft_time(t_data *data);
 void		destroy_mutex(t_data *data);
 

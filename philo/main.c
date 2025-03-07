@@ -49,8 +49,8 @@ int	init_data(int argc, char **argv, t_data *data)
 		return (printf("Malloc failed\n"), 1);
 	pthread_mutex_init(&data->write_mutex, NULL);
 	pthread_mutex_init(&data->simu_mutex, NULL);
-	while (data->nb_philo && i++)
-		pthread_mutex_init(&data->fork[i], NULL);
+	while (i < data->nb_philo)
+		(pthread_mutex_init(&data->fork[i], NULL), i++);
 	return (0);
 }
 
@@ -80,7 +80,6 @@ int	main(int argc, char **argv)
 {
 	t_data		data;
 	t_philo		*philo;
-	pthread_t	monitor_thread;
 
 	if (error(argc, argv))
 		return (1);
@@ -93,12 +92,8 @@ int	main(int argc, char **argv)
 	philo = init_philo(&data);
 	if (!philo)
 		return (1);
-	if (pthread_create(&monitor_thread, NULL, check_death, &data) != 0)
-		return (printf("Error creating thread\n"), 1);
 	create_threads(philo, &data);
-	destroy_mutex(&data);
 	free(data.fork);
 	free(data.philo);
-	pthread_join(monitor_thread, NULL);
 	return (0);
 }
