@@ -47,8 +47,6 @@ int	init_data(int argc, char **argv, t_data *data)
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
 		return (printf("Malloc failed\n"), 1);
-	pthread_mutex_init(&data->write_mutex, NULL);
-	pthread_mutex_init(&data->simu_mutex, NULL);
 	while (i < data->nb_philo)
 		(pthread_mutex_init(&data->fork[i], NULL), i++);
 	return (0);

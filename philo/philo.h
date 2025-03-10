@@ -30,7 +30,7 @@ typedef struct s_data
 	long long		start_time;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	simu_mutex;
 }	t_data;
 

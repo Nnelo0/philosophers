@@ -6,6 +6,37 @@ void	check_death(t_philo *philo, t_data *data)
 		data->simu_over = 1;
 }
 
+void	print_mutex(t_data *data, char *colors, int id, char *arg)
+{
+	pthread_mutex_lock(&data->print_mutex);
+	printf("%s %lld %d %s", colors, ft_time(data), id ,arg);
+	pthread_mutex_unlock(&data->print_mutex);
+}
+
+void	philo_eat(t_philo *philo, t_data *data)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(&data->fork[philo->right_fork]);
+		print_mutex(data, RESET, philo->id, "has taken right fork\n");
+		pthread_mutex_lock(&data->fork[philo->left_fork]);
+		print_mutex(data, RESET, philo->id, "has taken left fork\n");
+	}
+	else
+	{
+		pthread_mutex_lock(&data->fork[philo->left_fork]);
+		print_mutex(data, RESET, philo->id, "has taken left fork\n");
+		pthread_mutex_lock(&data->fork[philo->right_fork]);
+		print_mutex(data, RESET, philo->id, "has taken right fork\n");
+	}
+	philo->meal_count += 1;
+	philo->last_meal = get_timestamp_ms();
+	print_mutex(data, GREEN, philo->id, "is eating\n");
+	usleep(1000 * data->time_eat);
+	pthread_mutex_unlock(&data->fork[philo->right_fork]);
+	pthread_mutex_unlock(&data->fork[philo->left_fork]);
+}
+
 static void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -15,28 +46,12 @@ static void	*philo_routine(void *arg)
 	data = philo->data;
 	if (philo->id % 2 == 0)
 		usleep(300);
-	while (1)
+	for (int i = 0; i != 5; i++)
 	{
-		check_death(philo, data);
-		if (data->simu_over == 1)
-			return (printf(RED "%lld %d died\n" RESET, ft_time(data), philo->id), NULL);
-		pthread_mutex_lock(&data->fork[philo->right_fork]);
-		printf("%lld %d has taken a rigth fork\n", ft_time(data), philo->id);
-		pthread_mutex_lock(&data->fork[philo->left_fork]);
-		printf("%lld %d has taken a left fork\n", ft_time(data), philo->id);
-		philo->meal_count += 1;
-		philo->last_meal = get_timestamp_ms();
-		printf(GREEN "%lld %d is eating\n" RESET, ft_time(data), philo->id);
-		usleep(1000 * data->time_eat);
-		pthread_mutex_unlock(&data->fork[philo->right_fork]);
-		pthread_mutex_unlock(&data->fork[philo->left_fork]);
-		if (data->simu_over == 1)
-			return (printf(RED "%lld %d died\n" RESET, ft_time(data), philo->id), NULL);
-		printf(MAGENTA "%lld %d is sleeping\n" RESET, ft_time(data), philo->id);
+		philo_eat(philo, data);
+		print_mutex(data, MAGENTA, philo->id, "is sleeping\n");
 		usleep(1000 * data->time_sleep);
-		printf(CYAN "%lld %d is thinking\n" RESET, ft_time(data), philo->id);
-		if (data->simu_over == 1)
-			return (printf(RED "%lld %d died\n" RESET, ft_time(data), philo->id), NULL);
+		print_mutex(data, CYAN, philo->id, "is thinking\n");
 	}
 	return (NULL);
 }
