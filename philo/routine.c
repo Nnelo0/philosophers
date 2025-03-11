@@ -46,7 +46,7 @@ static void	*philo_routine(void *arg)
 	data = philo->data;
 	if (philo->id % 2 == 0)
 		usleep(300);
-	for (int i = 0; i != 5; i++)
+	while (philo->meal_count != data->nb_eat)
 	{
 		philo_eat(philo, data);
 		print_mutex(data, MAGENTA, philo->id, "is sleeping\n");
