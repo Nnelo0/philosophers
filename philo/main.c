@@ -10,7 +10,6 @@ int	create_threads(t_philo *philo, t_data *data)
 		if (pthread_create(&philo[i].thread, NULL, philo_routine,
 				&philo[i]) != 0)
 			return (printf("Error creating thread\n"), 1);
-		usleep(50);
 		i++;
 	}
 	i = -1;

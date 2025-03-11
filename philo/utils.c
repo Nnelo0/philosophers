@@ -59,6 +59,6 @@ long long	ft_time(long long index)
 void	print_mutex(t_data *data, char *colors, int id, char *arg)
 {
 	pthread_mutex_lock(&data->print_mutex);
-	printf("%s %lld %d %s", colors, ft_time(data->start_time), id, arg);
+	printf("%s%lld %d %s" RESET, colors, ft_time(data->start_time), id, arg);
 	pthread_mutex_unlock(&data->print_mutex);
 }
