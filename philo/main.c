@@ -1,11 +1,22 @@
 #include "philo.h"
 
-long long	get_timestamp_ms(void)
+int	create_threads(t_philo *philo, t_data *data)
 {
-	struct timeval	tv;
+	int	i;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000));
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_create(&philo[i].thread, NULL, philo_routine,
+				&philo[i]) != 0)
+			return (printf("Error creating thread\n"), 1);
+		usleep(50);
+		i++;
+	}
+	i = -1;
+	while (++i < data->nb_philo)
+		pthread_join(philo[i].thread, NULL);
+	return (0);
 }
 
 int	error(int argc, char **argv)
@@ -43,13 +54,14 @@ int	init_data(int argc, char **argv, t_data *data)
 	else
 		data->nb_eat = -1;
 	data->simu_over = 0;
-	data->start_time = get_timestamp_ms();
+	data->start_time = ft_time(0);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
 		return (printf("Malloc failed\n"), 1);
 	while (i < data->nb_philo)
 		(pthread_mutex_init(&data->fork[i], NULL), i++);
 	pthread_mutex_init(&data->print_mutex, NULL);
+	pthread_mutex_init(&data->simu_mutex, NULL);
 	return (0);
 }
 
@@ -85,9 +97,10 @@ int	main(int argc, char **argv)
 	if (init_data(argc, argv, &data))
 		return (1);
 	if (data.nb_philo == 1)
-		return (printf(BLUE "%lld 1 has taken a fork\n" RESET, ft_time(&data)),
-			usleep(data.time_die * 1000),
-			printf(RED "%lld 1 died\n" RESET, ft_time(&data)), free(data.fork), 0);
+		return (printf("%lld 1 has taken a fork\n",
+				ft_time(data.start_time)), usleep(data.time_die * 1000),
+			printf(RED "%lld 1 died\n" RESET, ft_time(data.start_time))
+			, free(data.fork), 0);
 	philo = init_philo(&data);
 	if (!philo)
 		return (1);

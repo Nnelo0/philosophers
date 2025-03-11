@@ -48,7 +48,17 @@ int	ft_isdigit_s(char *s)
 	return (1);
 }
 
-long long	ft_time(t_data *data)
+long long	ft_time(long long index)
 {
-	return (get_timestamp_ms() - data->start_time);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000)) - index);
+}
+
+void	print_mutex(t_data *data, char *colors, int id, char *arg)
+{
+	pthread_mutex_lock(&data->print_mutex);
+	printf("%s %lld %d %s", colors, ft_time(data->start_time), id, arg);
+	pthread_mutex_unlock(&data->print_mutex);
 }

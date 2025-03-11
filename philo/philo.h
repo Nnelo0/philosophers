@@ -48,10 +48,10 @@ typedef struct s_philo
 
 int			ft_atoi(const char *nptr);
 int			ft_isdigit_s(char *s);
-long long	get_timestamp_ms(void);
+long long	ft_time(long long index);
 int			create_threads(t_philo *philo, t_data *data);
-void		check_death(t_philo *philo, t_data *data);
-long long	ft_time(t_data *data);
-void		destroy_mutex(t_data *data);
+int			check_death(t_philo *philo, t_data *data);
+void		print_mutex(t_data *data, char *colors, int id, char *arg);
+void		*philo_routine(void *arg);
 
 #endif
