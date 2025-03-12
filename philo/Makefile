@@ -1,5 +1,3 @@
-MAKEFLAGS += --silent
-
 NAME = philo
 
 CC = cc
