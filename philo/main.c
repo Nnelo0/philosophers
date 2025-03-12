@@ -43,8 +43,8 @@ int	init_data(int argc, char **argv, t_data *data)
 
 	i = 0;
 	data->nb_philo = ft_atoi(argv[1]);
-	if (data->nb_philo <= 0 || data->nb_philo > 250)
-		return (printf("nb_of_philo must be in 1 and 250\n"), 1);
+	if (data->nb_philo <= 0 || data->nb_philo > 200)
+		return (printf("nb_of_philo must be in 1 and 200\n"), 1);
 	data->time_die = ft_atoi(argv[2]);
 	data->time_eat = ft_atoi(argv[3]);
 	data->time_sleep = ft_atoi(argv[4]);

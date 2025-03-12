@@ -5,7 +5,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread
 
-SRCS = main.c utils.c routine.c
+SRCS = main.c utils.c routine.c fork.c
 
 OBJS = $(SRCS:.c=.o)
 
