@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:47 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/12 11:37:48 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:17:32 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	error(int argc, char **argv)
 	{
 		if (!ft_isdigit_s(argv[i]))
 			return (printf("args must be a positive integer\n"), 1);
-		if (ft_atoi(argv[i]) > INT_MAX || ft_atoi(argv[i]) < 0)
+		if (ft_atol(argv[i]) > INT_MAX || ft_atol(argv[i]) < 0)
 			return (printf("args must be a positive integer\n"), 1);
 		i++;
 	}
@@ -54,14 +54,14 @@ int	init_data(int argc, char **argv, t_data *data)
 	int	i;
 
 	i = 0;
-	data->nb_philo = ft_atoi(argv[1]);
+	data->nb_philo = ft_atol(argv[1]);
 	if (data->nb_philo <= 0 || data->nb_philo > 200)
 		return (printf("nb_of_philo must be in 1 and 200\n"), 1);
-	data->time_die = ft_atoi(argv[2]);
-	data->time_eat = ft_atoi(argv[3]);
-	data->time_sleep = ft_atoi(argv[4]);
+	data->time_die = ft_atol(argv[2]);
+	data->time_eat = ft_atol(argv[3]);
+	data->time_sleep = ft_atol(argv[4]);
 	if (argc == 6)
-		data->nb_eat = ft_atoi(argv[5]);
+		data->nb_eat = ft_atol(argv[5]);
 	else
 		data->nb_eat = -1;
 	data->simu_over = 0;

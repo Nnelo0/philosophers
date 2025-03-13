@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:49 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/12 11:37:50 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:17:15 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	philo_eat(t_philo *philo, t_data *data)
 		if (check_death(philo, data))
 			return (pthread_mutex_unlock(&data->fork[philo->right_fork])
 				, pthread_mutex_unlock(&data->fork[philo->left_fork]), 1);
-		usleep(100);
+		usleep(500);
 	}
 	pthread_mutex_unlock(&data->fork[philo->right_fork]);
 	pthread_mutex_unlock(&data->fork[philo->left_fork]);
@@ -73,7 +73,7 @@ int	philo_sleep(t_philo *philo, t_data *data)
 	{
 		if (check_death(philo, data))
 			return (1);
-		usleep(100);
+		usleep(500);
 	}
 	return (0);
 }
@@ -98,7 +98,7 @@ void	*philo_routine(void *arg)
 		if (check_death(philo, data))
 			return (NULL);
 		print_mutex(data, CYAN, philo->id, "is thinking\n");
-		usleep(1000);
+		usleep(500);
 		if (check_death(philo, data))
 			return (NULL);
 	}

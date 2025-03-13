@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:55 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/12 11:37:56 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:16:43 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_philo
 	pthread_t		thread;
 }	t_philo;
 
-int			ft_atoi(const char *nptr);
+long		ft_atol(const char *nptr);
 int			ft_isdigit_s(char *s);
 long long	ft_time(long long index);
 int			create_threads(t_philo *philo, t_data *data);
