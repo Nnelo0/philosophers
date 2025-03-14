@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:47 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/13 15:17:32 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/14 08:53:49 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ int	error(int argc, char **argv)
 	int	i;
 
 	if (argc < 5 || argc > 6)
-		return (printf("usage : ./philo <nb_philo> <time_to_die> \
-<time_to_eat> <time_to_sleep> (<nb_of_eat>)\n"), 1);
+		return (printf(RED"usage : ./philo <nb_philo> <time_to_die> \
+<time_to_eat> <time_to_sleep> (<nb_of_eat>)\n"RESET), 1);
 	i = 1;
 	while (argv[i])
 	{
 		if (!ft_isdigit_s(argv[i]))
-			return (printf("args must be a positive integer\n"), 1);
+			return (printf(RED"args must be a positive integer\n"RESET), 1);
 		if (ft_atol(argv[i]) > INT_MAX || ft_atol(argv[i]) < 0)
-			return (printf("args must be a positive integer\n"), 1);
+			return (printf(RED"args must be a positive integer\n"RESET), 1);
 		i++;
 	}
 	return (0);
@@ -56,7 +56,7 @@ int	init_data(int argc, char **argv, t_data *data)
 	i = 0;
 	data->nb_philo = ft_atol(argv[1]);
 	if (data->nb_philo <= 0 || data->nb_philo > 200)
-		return (printf("nb_of_philo must be in 1 and 200\n"), 1);
+		return (printf(RED"nb_of_philo must be in 1 and 200\n"RESET), 1);
 	data->time_die = ft_atol(argv[2]);
 	data->time_eat = ft_atol(argv[3]);
 	data->time_sleep = ft_atol(argv[4]);
