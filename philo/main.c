@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:47 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/14 09:54:48 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:36:56 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	init_data(int argc, char **argv, t_data *data)
 	else
 		data->nb_eat = -1;
 	data->simu_over = 0;
+	data->take_left_fork = 0;
+	data->take_right_fork = 0;
 	data->start_time = ft_time(0);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
@@ -73,6 +75,7 @@ int	init_data(int argc, char **argv, t_data *data)
 		(pthread_mutex_init(&data->fork[i], NULL), i++);
 	pthread_mutex_init(&data->print_mutex, NULL);
 	pthread_mutex_init(&data->simu_mutex, NULL);
+	pthread_mutex_init(&data->check_fork, NULL);
 	return (0);
 }
 
