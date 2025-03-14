@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:52 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/13 15:16:30 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:32:57 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ long	ft_atol(const char *nptr)
 
 static int	ft_isdigit(int c)
 {
-	if ('0' <= c && '9' >= c)
+	if (('0' <= c && '9' >= c) || c == '+')
 		return (1);
 	return (0);
 }

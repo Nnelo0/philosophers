@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:49 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/13 15:17:15 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:56:33 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	data = philo->data;
+	if (one_philo(data) == 1)
+		return (NULL);
 	while (philo->meal_count != data->nb_eat)
 	{
 		if (check_death(philo, data))

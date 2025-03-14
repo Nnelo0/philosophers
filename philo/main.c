@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:47 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/14 08:53:49 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:54:48 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,6 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_data(argc, argv, &data))
 		return (1);
-	if (data.nb_philo == 1)
-		return (printf("%lld 1 has taken a fork\n",
-				ft_time(data.start_time)), usleep(data.time_die * 1000),
-			printf(RED "%lld 1 died\n" RESET, ft_time(data.start_time))
-			, free(data.fork), 0);
 	philo = init_philo(&data);
 	if (!philo)
 		return (1);

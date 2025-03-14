@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:55 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/13 15:16:43 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:56:51 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ int			check_death(t_philo *philo, t_data *data);
 void		print_mutex(t_data *data, char *colors, int id, char *arg);
 void		*philo_routine(void *arg);
 int			take_fork(t_philo *philo, t_data *data);
-
+int			one_philo(t_data *data);
 #endif

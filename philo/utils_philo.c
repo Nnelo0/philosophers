@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fork.c                                             :+:      :+:    :+:   */
+/*   utils_philo.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:43 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/12 11:37:44 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:03:48 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,18 @@ int	take_fork(t_philo *philo, t_data *data)
 	}
 	if (check_death(philo, data))
 		return (unlock_fork(data, philo), 1);
+	return (0);
+}
+
+int	one_philo(t_data *data)
+{
+	if (data->nb_philo == 1)
+	{
+		if (data->time_die != 0)
+			printf("%lld 1 has taken a fork\n", ft_time(data->start_time));
+		usleep(data->time_die * 1000);
+		printf(RED "%lld 1 died\n" RESET, ft_time(data->start_time));
+		return (1);
+	}
 	return (0);
 }
