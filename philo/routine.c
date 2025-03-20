@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:49 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/14 14:05:13 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:13:07 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,19 @@ int	philo_eat(t_philo *philo, t_data *data)
 	philo->meal_count += 1;
 	philo->last_meal = ft_time(0);
 	if (check_death(philo, data))
-		return (unlock_fork(data, philo), 1);
+		return (unlock_fork(data, philo), mutex_untake_fork(philo, data, 
+		'a'), 1);
 	print_mutex(data, GREEN, philo->id, "is eating\n");
 	start_eat = ft_time(0);
 	while (ft_time(start_eat) < data->time_eat)
 	{
 		if (check_death(philo, data))
-			return (unlock_fork(data, philo), 1);
+			return (unlock_fork(data, philo), mutex_untake_fork(philo, data, 
+			'a'), 1);
 		usleep(500);
 	}
 	unlock_fork(data, philo);
+	mutex_untake_fork(philo, data, 'a');
 	return (0);
 }
 

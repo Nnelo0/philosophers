@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:47 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/14 15:36:56 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/20 10:41:44 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	init_data(int argc, char **argv, t_data *data)
 	else
 		data->nb_eat = -1;
 	data->simu_over = 0;
-	data->take_left_fork = 0;
-	data->take_right_fork = 0;
 	data->start_time = ft_time(0);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
@@ -75,7 +73,6 @@ int	init_data(int argc, char **argv, t_data *data)
 		(pthread_mutex_init(&data->fork[i], NULL), i++);
 	pthread_mutex_init(&data->print_mutex, NULL);
 	pthread_mutex_init(&data->simu_mutex, NULL);
-	pthread_mutex_init(&data->check_fork, NULL);
 	return (0);
 }
 
@@ -89,9 +86,17 @@ t_philo	*init_philo(t_data *data)
 		return (printf("Malloc error\n"), NULL);
 	while (i < data->nb_philo)
 	{
+		data->philo[i].left_fork = malloc(sizeof(int) * 3);
+		if (!data->philo[i].left_fork)
+			return (printf("Malloc error\n"), NULL);
+		data->philo[i].right_fork = malloc(sizeof(int) * 3);
+		if (!data->philo[i].right_fork)
+			return (printf("Malloc error\n"), NULL);
 		data->philo[i].id = i + 1;
-		data->philo[i].left_fork = i;
-		data->philo[i].right_fork = (i + 1) % data->nb_philo;
+		data->philo[i].left_fork[0] = i;
+		data->philo[i].right_fork[0] = (i + 1) % data->nb_philo;
+		data->philo[i].left_fork[1] = 0;
+		data->philo[i].right_fork[1] = 0;
 		data->philo[i].meal_count = 0;
 		data->philo[i].last_meal = data->start_time;
 		pthread_mutex_init(&data->philo[i].meal_mutex, NULL);
@@ -105,7 +110,9 @@ int	main(int argc, char **argv)
 {
 	t_data		data;
 	t_philo		*philo;
+	int		i;
 
+	i = 0;
 	if (error(argc, argv))
 		return (1);
 	if (init_data(argc, argv, &data))
@@ -114,6 +121,12 @@ int	main(int argc, char **argv)
 	if (!philo)
 		return (1);
 	create_threads(philo, &data);
+	while (i < data.nb_philo)
+	{
+		free(data.philo[i].right_fork);
+		free(data.philo[i].left_fork);
+		i++;
+	}
 	free(data.fork);
 	free(data.philo);
 	return (0);

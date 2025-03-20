@@ -6,7 +6,7 @@
 /*   By: ebroudic <ebroudic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:37:55 by ebroudic          #+#    #+#             */
-/*   Updated: 2025/03/14 15:28:59 by ebroudic         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:10:44 by ebroudic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ typedef struct s_data
 	int				nb_eat;
 	int				simu_over;
 	long long		start_time;
-	int				take_right_fork;
-	int				take_left_fork;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	check_fork;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	simu_mutex;
 }	t_data;
@@ -52,8 +49,8 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int				id;
-	int				left_fork;
-	int				right_fork;
+	int				*left_fork;
+	int				*right_fork;
 	int				meal_count;
 	long long		last_meal;
 	pthread_mutex_t	meal_mutex;
@@ -71,4 +68,6 @@ void		*philo_routine(void *arg);
 int			take_fork(t_philo *philo, t_data *data);
 int			one_philo(t_data *data);
 void		unlock_fork(t_data *data, t_philo *philo);
+void		mutex_untake_fork(t_philo *philo, t_data *data, char c);
+void		mutex_take_fork(t_philo *philo, t_data *data, char c);
 #endif
